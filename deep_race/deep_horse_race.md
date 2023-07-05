@@ -21,14 +21,15 @@
    - Surface preference
    - Distance preference
    - Class preference
-   - Travel distance to race
+   - Travel distance to race (Is the horse out of country? Travel distance - maybe get google maps to calc distance?)
    - Win odds
    - Place odds
    - Speed or pace metric
    - Boolean maiden (a horse that never won a race)
    - Ranking (some kind of multi-agent ELO / ranking score)
-   - Trend of the above 
-
+   - Trend of the above ranking score 
+   - Previous odds spread - Was there a significant difference between starting and closing odds? Odds risk - standard deviation, did this go up or down?
+   - Average odds spread? Is this horse known for gaming the odds?
 
 **2. External Features**
    - Venue (+ venue bias)
@@ -46,10 +47,16 @@
    - Place ratio
    - Average races per horse in stables
    - Average ranking of horse in stable
+   - Odds informaiton - Does this trainer use inside information to trade? Big odds moves for the trainer? Any trend here?
 
 **4. Jockey Features**
    - Win ratio
    - Place ratio
+   - Odds informaiton - Does this trainer use inside information to trade? Big odds moves for the jockey? Any trend here?
+   - Jockey weight, height (maybe bmi?)
+   - Foreign jockey?
+   - Average class of race vs current?
+
 
 ## Model Development
 
