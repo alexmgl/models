@@ -60,6 +60,6 @@
 
 ## Model Development
 
-- 14 binary output variables. 
-- Model required [14] horses as input. Fill dummy horse features with 0s if there are insufficient runners.
+- 14 binary output variables, representing encoded won / finished variables.
+- Model requires [14] horse vectors as input. Fill dummy horse features with 0s if there are insufficient runners.
 - If new horse without data, find the average data of a similar horse on the first race and use that.
