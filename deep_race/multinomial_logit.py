@@ -24,7 +24,7 @@ def get_models():
         # turn off penalty in some cases
         if p == 0.0:
             # no penalty in this case
-            models[key] = LogisticRegression(multi_class='multinomial', solver='lbfgs', penalty='none')
+            models[key] = LogisticRegression(multi_class='multinomial', solver='lbfgs', penalty=None)
         else:
             models[key] = LogisticRegression(multi_class='multinomial', solver='lbfgs', penalty='l2', C=p)
     return models
