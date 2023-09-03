@@ -2,27 +2,29 @@ import sympy as sp
 import math
 
 
-def univariate_taylor_expansion(function, variables, nth_order, point_val):
+def univariate_taylor_expansion(input_func, var, nth_order, point_val, solution=0):
+    f_diff = sp.diff(input_func, var, nth_order)
+    f_diff_sol = f_diff.subs(var, 1)
 
-    solution = None
+    nth_diff = (((var - 1) ** nth_order) / math.factorial(nth_order)) * f_diff_sol
 
-    for i in range(nth_order + 1):
+    solution += nth_diff
 
-        f_diff = sp.diff(function, variables, i)
-        f_diff_sol = f_diff.subs(variables, 1)
+    nth_order -= 1
 
-        nth_diff = (((variables - 1) ** i) / math.factorial(i)) * f_diff_sol
+    if nth_order < 0:
 
-        solution = nth_diff if solution is None else solution + nth_diff
+        return solution.subs(var, point_val)
 
-    return solution.subs(variables, point_val)
+    else:
+
+        return univariate_taylor_expansion(input_func, var, nth_order, point_val, solution)
 
 
 if __name__ == '__main__':
-
     # Example problem
     x1 = sp.symbols('x')
-    function = x1 ** 3 - 2 * sp.ln(x1)
+    my_func = x1 ** 3 - 2 * sp.ln(x1)
 
-    result = univariate_taylor_expansion(function, variables=x1, nth_order=3, point_val=1.5)
+    result = univariate_taylor_expansion(input_func=my_func, var=x1, nth_order=3, point_val=1.02)
     print(result)
