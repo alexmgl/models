@@ -4,8 +4,6 @@ Medium term Holt Winters Exponential Smoothing forecast.
 Data grouping is weekly, no shaping performed.
 """
 
-# # ERM Quantitative Risk
-
 import datetime
 import pickle
 from matplotlib import pyplot as plt
