@@ -3,8 +3,6 @@ Functions to implement the SARIMA(X) model for load forecasting.
 Data grouping is weekly, no shaping performed.
 """
 
-# # ERM Quantitative Risk
-
 import os
 import datetime
 import pickle
@@ -24,9 +22,9 @@ class SarimaModel:
 
     def __init__(self):
         # data root
-        self.default_filepath = r'C:\Users\ee080463\EWEC\EWEC - GF - ERM - Documents\Quant Risk Models\_data\_Forecasting Models'
-        self.default_filename = 'weeklydata.xlsx'
-        self.default_data_start = '2016-01-01'
+        self.default_filepath = r'FILEPATH'
+        self.default_filename = 'FILENAME.xlsx'
+        self.default_data_start = '%Y-%m-%d'
 
         # model objects
         self.input_df = None
