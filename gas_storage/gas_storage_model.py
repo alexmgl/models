@@ -7,7 +7,15 @@ import copy
 """ Strategy: Which gas contracts should I buy at which periods and in what quantity in order to maximise profit """
 
 unit_commitment = 'https://medium.com/@AlainChabrier/unit-commitment-cd567add409b#:~:text=The%20Unit%20Commitment%20problem%20answers,use%3F%20(yes%20or%20no)'
-
+gas_matlab = 'https://www.youtube.com/watch?v=Uu2JHzgeDUU'
+cme_gas_spreads = 'https://www.youtube.com/watch?v=JII3LGj4xmo'
+commodity_models_harvard = 'https://www.youtube.com/watch?v=nmehlS-8b3Y'
+presentation_on_storage = 'https://www.youtube.com/watch?v=Oh56GBofz8U'
+bog_optimisation = 'https://www.youtube.com/watch?v=FlOXu68uLtU'
+gas_storage_explained = 'https://www.youtube.com/watch?v=qso-h6Ckgtw'
+gas_storage_explained_2 = 'https://www.youtube.com/watch?v=rTE9FYiy4-s'
+phd_thesis_defense = 'https://www.youtube.com/watch?v=irR-aD7Cvqw'
+long_term_energy_markets = 'https://www.youtube.com/watch?v=yTxrLAdapJw&t=1s'
 
 class StoragePortfolio:
 
