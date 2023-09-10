@@ -7,11 +7,10 @@ import copy
 """ Strategy: Which gas contracts should I buy at which periods and in what quantity in order to maximise profit """
 
 unit_commitment = 'https://medium.com/@AlainChabrier/unit-commitment-cd567add409b#:~:text=The%20Unit%20Commitment%20problem%20answers,use%3F%20(yes%20or%20no)'
-gas_matlab = 'https://www.youtube.com/watch?v=Uu2JHzgeDUU'
-cme_gas_spreads = 'https://www.youtube.com/watch?v=JII3LGj4xmo'
+gas_matlab = 'https://www.youtube.com/watch?v=Uu2JHzgeDUU' very good 
+cme_gas_spreads = 'https://www.youtube.com/watch?v=JII3LGj4xmo' good basic intro 
 commodity_models_harvard = 'https://www.youtube.com/watch?v=nmehlS-8b3Y'
 presentation_on_storage = 'https://www.youtube.com/watch?v=Oh56GBofz8U'
-bog_optimisation = 'https://www.youtube.com/watch?v=FlOXu68uLtU'
 gas_storage_explained = 'https://www.youtube.com/watch?v=qso-h6Ckgtw'
 gas_storage_explained_2 = 'https://www.youtube.com/watch?v=rTE9FYiy4-s'
 phd_thesis_defense = 'https://www.youtube.com/watch?v=irR-aD7Cvqw'
@@ -19,25 +18,44 @@ long_term_energy_markets = 'https://www.youtube.com/watch?v=yTxrLAdapJw&t=1s'
 
 class StoragePortfolio:
 
+    # todo - need to be able to read in forward prices for pricing (useful to see the changing prices over time, e.g. 3d plot)
+    # todo - by reading in option prices we can calculate the implied volatility 
+
+    # todo - need to have a model that takes in forward curve and estimates correlations and volatilities
+    # todo - show volatility term structure
+
     def __init__(self):
+
+        self.start_date = "2023-01-01"
+        seld.end_date = "2023-12-31"
 
         self.portfolio = []
         self.available_contracts = set()
 
+        self.discount_rate = None # todo
+        self.liquidity_spread = None # todo - maybe already called transaction cost
+
         self.no_instruments = 0
         self.realised_pnl = 0
 
-        self.max_capacity = 100000
-        self.min_capacity = 0
+        self.start_volume = 0
+        self.end_volume = 0
 
-        self.max_injection_flow_rate_day = 5000
+        self.max_capacity = 1000000  # max working gas volume mm.btu
+        self.min_capacity = 0  # min working gas volume 
+
+        self.max_injection_flow_rate_day = 5000  # todo - need to make constraints variable (e.g. at 0% full, withdraw 5000, but at 90% we may only withdraw 3000 per day)
         self.max_withdrawal_flow_rate_day = 5000
 
         self.flow_ratchets = None
-        self.variable_injection = None
-        self.variable_withdrawal = None
+        self.variable_injection = None  # injection unit cost (if daily, we need to work out monthly because we are dealing with monthly contracts)
+        self.variable_withdrawal = None  # withdrawl unit cost 
 
         self.storage_df = pd.DataFrame(columns=['dt', 'injection_mmbtu', 'withdrawl_mmbtu', 'level_mmbtu'])
+
+        # todo 
+        self.bid_ask_spread = None 
+        self.lot_size = None 
 
     # todo - need to be able to specify lots
     def add_position(self, forward, direction, contracts=1):
@@ -411,6 +429,30 @@ class StorageAssetModel:
 
     def sim(self):
         pass
+
+def model_calibration():
+    # forward curve statistics (volatility)
+    # monthly volatilities for annualised histoiric vol
+    # time varying correlations
+    # we can use pca to reduce 12x12 sigma (correlation/covariance) matrix to (for example 3x3)
+    pass
+
+# todo 
+def valuation_intrinsic(forward_curve):
+    # use a linear optimiser to solve for storage optimisation against a forward curve
+    intrinsic_val = 0
+    discount_intrinsic_val = 0
+    # todo - operating and trading constraints e.g. injection and trading lot size, discount rate 
+    return intrinsic_val, discount_intrinsic_val
+
+def valuation_spread_option_basket():
+    pass
+
+def valuation_rolling_intrinsic(sims=1000):
+    pass
+
+def valuation_spot_optimisation():
+    pass
 
 if __name__ == '__main__':
     pass
