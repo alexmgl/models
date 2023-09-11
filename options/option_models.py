@@ -1,19 +1,6 @@
 import numpy as np
 from scipy import stats
 
-""" Black-Scholes Model
-Binomial Options Pricing Model (BOPM)
-Trinomial Tree Model
-Black Model
-Heston Model
-Merton's Jump-Diffusion Model
-Binomial Jump Diffusion Model
-GARCH Option Pricing Model
-Stochastic Calculus Models
-Local Volatility Models
-Implied Volatility Models
-Monte Carlo Simulation"""
-
 
 # Base Option class for pricing models
 class Option:
