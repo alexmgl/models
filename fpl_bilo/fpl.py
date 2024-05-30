@@ -265,6 +265,113 @@ class PremierLeague:
                 return key
         return None  # Return None if the value is not found
 
+import numpy as np
+import pandas as pd
+import random
+import matplotlib.pyplot as plt
+
+
+def create_dummy_dataframe():
+
+    # Number of game weeks
+    num_gameweeks = 38
+    # Number of players
+    num_players = 100
+
+    # Create a list of game weeks
+    gw_list = list(range(1, num_gameweeks + 1))
+
+    # Create a list of player IDs
+    player_ids = list(range(1, num_players + 1))
+
+    # Initialize an empty list to store rows
+    data = []
+
+    # Generate dummy data
+    for gw in gw_list:
+        for player_id in player_ids:
+            total_score = np.random.randint(0, 10)  # Random score between 0 and 100
+            data.append([gw, player_id, total_score])
+
+    # Create DataFrame
+    df = pd.DataFrame(data, columns=['GW', 'id', 'total_score'])
+
+    return df
+
+def backtest(team_array, captain_array=None):
+
+    master_df = create_dummy_dataframe()
+
+    # Initialize dictionary to store gameweek scores
+    gw_scores = {}
+
+    # Iterate over team_array and calculate scores
+    for index, team in enumerate(team_array, start=1):
+        gw_score = master_df.loc[(master_df['GW'] == index) & (master_df['id'].isin(team)), 'total_score'].sum()
+        gw_scores[index] = gw_score
+
+    # Calculate the total score for the season
+    season_score = sum(gw_scores.values())
+
+    return gw_scores, season_score
+
+
+def plot_backtest(gw_scores, season_winner_score=None):
+    # Calculate cumulative scores
+    cumulative_scores = {gw: sum([score for i, score in gw_scores.items() if i <= gw]) for gw in gw_scores}
+    cumulative_per_player_scores = {gw: sum([score / (11 * gw) for i, score in gw_scores.items() if i <= gw]) for gw in
+                                    gw_scores}
+
+    game_weeks = list(cumulative_scores.keys())
+    cumulative_values = list(cumulative_scores.values())
+    cumulative_per_player_values = list(cumulative_per_player_scores.values())
+
+    fig, (ax1, ax2, ax3) = plt.subplots(3)
+
+    # Plot game week scores
+    ax1.bar(gw_scores.keys(), gw_scores.values())
+    ax1.set_title('Game Week Scores')
+    ax1.set_xlabel('Game Week')
+    ax1.set_ylabel('Score')
+
+    # Add second y-axis to ax1 for cumulative per player score
+    ax2.plot(game_weeks, cumulative_per_player_values, color='orange', marker='o')
+    ax2.set_ylabel('Cumulative Per Player Score')
+    ax2.tick_params(axis='y')
+
+    # Plot cumulative scores
+    ax3.plot(game_weeks, cumulative_values)
+
+    if season_winner_score:
+        ax3.hlines(y=season_winner_score, xmin=min(game_weeks), xmax=max(game_weeks), linestyles='dashed', color='red',
+                   label='Season Winner Score')
+        ax3.fill_between(game_weeks, cumulative_values, season_winner_score,
+                         where=(np.array(cumulative_values) > season_winner_score), interpolate=True, color='green',
+                         alpha=0.3, label='Above Winner Score')
+
+    ax3.set_title('Cumulative Scores')
+    ax3.set_xlabel('Game Week')
+    ax3.set_ylabel('Cumulative Score')
+
+    fig.tight_layout()
+    fig.legend(loc='upper right')
+    plt.show()
+
+if __name__ == '__main__':
+
+    num_list = [i for i in range(100)]
+    gws = 38
+    lineup_array = []
+    for gw in range(gws):
+        gw_team = random.choices(num_list, k=11)
+        lineup_array.append(gw_team)
+
+    gw_scores, season_score = backtest(lineup_array)
+    plot_backtest(gw_scores, season_winner_score=1000)
+
+
+
+
 if __name__ == "__main__":
 
     PremierLeague().get_sub_combinations()
